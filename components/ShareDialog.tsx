@@ -6,6 +6,8 @@ import { buildPdf, pdfFileName } from "@/lib/pdf";
 import { formatDate, loadSettings, saveSettings, type FormData } from "@/lib/store";
 import { buildSummary } from "@/lib/summary";
 
+const STATIC_SITE = process.env.NEXT_PUBLIC_STATIC === "1";
+
 type Props = { c: Checklist; f: FormData; date: string; onClose: () => void };
 
 export function ShareDialog({ c, f, date, onClose }: Props) {
@@ -162,9 +164,11 @@ export function ShareDialog({ c, f, date, onClose }: Props) {
         />
 
         <div className="grid gap-3">
-          <button type="button" disabled={busy} onClick={sendPdf} className="min-h-14 rounded-xl bg-brand text-lg font-bold text-white active:bg-brand-dark disabled:opacity-60">
-            {busy ? "Sending…" : sent ? "✓ Sent – send again" : "✉ Email PDF now"}
-          </button>
+          {!STATIC_SITE && (
+            <button type="button" disabled={busy} onClick={sendPdf} className="min-h-14 rounded-xl bg-brand text-lg font-bold text-white active:bg-brand-dark disabled:opacity-60">
+              {busy ? "Sending…" : sent ? "✓ Sent – send again" : "✉ Email PDF now"}
+            </button>
+          )}
           <button type="button" onClick={sendEmail} className="min-h-12 rounded-xl border border-line bg-white text-lg font-semibold">
             Open in my email app (text only)
           </button>
@@ -182,7 +186,9 @@ export function ShareDialog({ c, f, date, onClose }: Props) {
         </div>
 
         <p className="mt-4 text-base leading-snug text-muted">
-          “Email PDF now” sends the finished sheet, with signatures, straight from the site. No email app needed.
+          {STATIC_SITE
+            ? "Download, print or share the finished PDF, or open it in your email app."
+            : "“Email PDF now” sends the finished sheet, with signatures, straight from the site. No email app needed."}
         </p>
         {msg && (
           <p role="status" className={`mt-3 rounded-lg p-3 text-base font-semibold ${/^(Sent|PDF saved|Shared|Opening)/.test(msg) ? "bg-teal-soft text-teal" : "bg-[#fbe9e5] text-brand-dark"}`}>

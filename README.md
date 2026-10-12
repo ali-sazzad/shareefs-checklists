@@ -6,6 +6,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-daily--shift--checklists--aus.vercel.app-c8452f?style=for-the-badge&logo=vercel&logoColor=white)](https://daily-shift-checklists-aus.vercel.app)
 
+[![GitHub Pages](https://img.shields.io/badge/Mirror-GitHub%20Pages-222?logo=github&logoColor=white)](https://ali-sazzad.github.io/shareefs-checklists/)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -114,11 +115,16 @@ All tasks live in [`lib/checklists.ts`](lib/checklists.ts). Add or edit a sectio
 
 ## Deployment
 
-The app is deployed on [Vercel](https://vercel.com). To deploy your own copy:
+### Vercel (full app, with server email)
 
 1. Import this repository at [vercel.com/new](https://vercel.com/new).
 2. (Optional) Add the SMTP environment variables above under **Settings → Environment Variables**.
-3. Deploy. Every push to `main` ships automatically.
+3. Deploy. Connect the Git repository so pushes to `main` ship automatically.
+
+### GitHub Pages (static mirror)
+
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) builds a static export (`NEXT_PUBLIC_STATIC=1`, base path `/shareefs-checklists`) on every push to `main` and publishes it to
+<https://ali-sazzad.github.io/shareefs-checklists/>. Pages has no server, so the server-side email route is excluded and the **Email PDF now** button is hidden there; download, print, share and the mail-app link all still work.
 
 ## Security notes
 
