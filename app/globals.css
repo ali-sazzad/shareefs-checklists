@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f4f1ec;
+  --card: #ffffff;
+  --ink: #232323;
+  --muted: #6b6b6b;
+  --line: #ddd7cd;
+  --brand: #c8452f;
+  --brand-dark: #a63523;
+  --teal: #2f7a6e;
+  --teal-soft: #e3f0ed;
+  --charcoal: #2b2b2b;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-charcoal: var(--charcoal);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 18px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* In the base layer so Tailwind size classes win; fields stay >= 16px so iOS doesn't zoom on focus. */
+@layer base {
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.pop { animation: pop 0.22s ease-out; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 0.25s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pop, .rise { animation: none; }
+}
+
+/* ---------- Print ---------- */
+@page {
+  size: A4;
+  margin: 8mm;
+}
+
+@media print {
+  html, body {
+    background: #fff !important;
+    font-size: 10px;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
